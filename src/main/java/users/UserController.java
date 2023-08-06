@@ -3,6 +3,7 @@ package users;
 
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -105,5 +106,15 @@ public class UserController {
     public User logout() {
         this.displayMessage("You successfully logged out!");
         return null;
+    }
+
+    public User getUserById(int id){
+        try{
+            User user = this.userRepository.getUserByID(id);
+            return user;
+        } catch (SQLException exception){
+            this.displayMessage(exception.getMessage());
+            return null;
+        }
     }
 }

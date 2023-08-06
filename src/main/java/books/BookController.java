@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -182,6 +183,16 @@ public class BookController {
         }
     }
 
+    public Book getBookById(int id){
+        try{
+            ResultSet resultSet = this.bookRepository.findBookById(id);
+            Book book = this.bookRepository.getBookFromDB(resultSet);
+            return book;
+        } catch (SQLException exception){
+            this.displayMessage(exception.getMessage());
+            return null;
+        }
+    }
 
 
 }

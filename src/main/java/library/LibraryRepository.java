@@ -45,4 +45,18 @@ public class LibraryRepository {
         }
         return books;
     }
+
+    public ResultSet getLibrary() throws SQLException{
+        String sql = "select * from library";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+
+    public ResultSet getBorrowedBooks() throws SQLException{
+        String sql = "select * from library where date_returning is null ";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
 }

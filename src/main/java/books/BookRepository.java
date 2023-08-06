@@ -62,17 +62,17 @@ public class BookRepository {
         preparedStatement.executeUpdate();
     }
 
-    private ResultSet findBookById(int id) throws SQLException{
+    public ResultSet findBookById(int id) throws SQLException{
 
         String sql = "SELECT * from books where id = ?";
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        return resultSet;
+        return preparedStatement.executeQuery();
     }
 
     public void changeBookCount(Book book, int increment) throws SQLException{
         int count = 0;
+
         ResultSet resultSet = this.findBookById(book.getId());
         while (resultSet.next()) {
             count = resultSet.getInt("count");
@@ -89,7 +89,21 @@ public class BookRepository {
         book.setCount(count);
     }
 
-    public void findBooksByUser(User user) {
+    public Book getBookFromDB(ResultSet resultSet) throws SQLException {
+        Book book = null;
+        while (resultSet.next()) {
+            book = new Book(
+                    resultSet.getInt("id"),
+                    resultSet.getString("title"),
+                    resultSet.getString("author"),
+                    resultSet.getString("description"),
+                    resultSet.getBoolean("is_active"),
+                    resultSet.getInt("count")
 
+            );
+        }
+        return book;
     }
+
+
 }

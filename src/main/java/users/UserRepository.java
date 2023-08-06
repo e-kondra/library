@@ -45,7 +45,7 @@ public class UserRepository {
 
     }
 
-    private User getUserFromDB(PreparedStatement preparedStatement) throws SQLException {
+    public User getUserFromDB(PreparedStatement preparedStatement) throws SQLException {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         User user = null;
@@ -60,6 +60,14 @@ public class UserRepository {
             );
         }
         return user;
+    }
+
+    public User getUserByID(int id)  throws SQLException {
+        String sql = "SELECT * FROM users where id = ?";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeQuery();
+        return getUserFromDB(preparedStatement);
     }
 }
 

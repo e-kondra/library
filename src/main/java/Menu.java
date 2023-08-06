@@ -34,8 +34,6 @@ public class Menu extends JFrame{
     private User currentUser;
 
 
-
-
     public Menu() {
         this.setDBConnection();
         this.currentUser = null;
@@ -92,6 +90,9 @@ public class Menu extends JFrame{
             // remove book
             else if (this.buttonDeleteBook.isSelected())
                 this.bookController.deletingBookDialog();
+            // show buttonBorrowedBooks
+            else if (this.buttonBorrowedBooks.isSelected())
+                this.libraryController.borrowedBookDialog();
             //Exit
             else if (this.buttonExit.isSelected()) {
                 this.userController.exit();
