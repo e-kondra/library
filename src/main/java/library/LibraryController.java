@@ -64,8 +64,6 @@ public class LibraryController {
             borrowedBook.setDateReturning(resultSet.getDate("date_returning"));
             library.add(borrowedBook);
         }
-        library.forEach(System.out::println);
-        System.out.println("---------");
         return library;
     }
 
