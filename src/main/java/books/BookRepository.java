@@ -3,6 +3,8 @@ package books;
 import users.User;
 
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BookRepository {
@@ -36,7 +38,7 @@ public class BookRepository {
     }
 
     private ResultSet getAllBooksFromDB()  throws SQLException {
-        String sql = "SELECT * FROM books where is_active = 1 order by title";
+        String sql = "SELECT * FROM books where is_active = 1 and count > 0 order by title";
         Statement statement = this.connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         return resultSet;

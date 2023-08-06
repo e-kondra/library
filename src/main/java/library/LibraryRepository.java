@@ -3,10 +3,8 @@ package library;
 import books.Book;
 import users.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class LibraryRepository {
@@ -27,7 +25,7 @@ public class LibraryRepository {
 
     public ArrayList<Book> findBooksByUser(User user) throws SQLException {
         String sql = "select * from books where exists" +
-                "(select book_id from library where book_id=books.id and user_id = ?)";
+                "(select book_id from library where book_id=books.id and user_id = ? and date_returning is null)";
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
         preparedStatement.setInt(1, user.getId());
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -58,5 +56,16 @@ public class LibraryRepository {
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet;
+    }
+
+    public void setBookReturnDate(Book book, User user) throws SQLException{
+
+        String sql = "UPDATE library SET date_returning = ? WHERE book_id = ? and user_id = ?";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        preparedStatement.setDate(1, Date.valueOf(LocalDate.now()));
+        preparedStatement.setInt(2, book.getId());
+        preparedStatement.setInt(3, user.getId());
+        preparedStatement.executeUpdate();
+
     }
 }

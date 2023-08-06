@@ -22,6 +22,7 @@ public class Menu extends JFrame{
     private final JRadioButton buttonBorrowedBooks = new JRadioButton("Borrowed books");
     private final JRadioButton buttonBorrowBook = new JRadioButton("borrow book");
     private final JRadioButton buttonReturnBook = new JRadioButton("return book");
+    private final JRadioButton buttonMyBorrowedBooks = new JRadioButton("My borrowed books");
     private final JRadioButton buttonLogout = new JRadioButton("logout");
 
     private BookController bookController;
@@ -90,9 +91,12 @@ public class Menu extends JFrame{
             // remove book
             else if (this.buttonDeleteBook.isSelected())
                 this.bookController.deletingBookDialog();
-            // show buttonBorrowedBooks
+            // show All Borrowed Books (for librarian)
             else if (this.buttonBorrowedBooks.isSelected())
                 this.libraryController.borrowedBookDialog();
+            // show users Borrowed Books (for User)
+            else if (this.buttonMyBorrowedBooks.isSelected())
+                this.libraryController.usersBorrowedBookDialog(this.currentUser);
             //Exit
             else if (this.buttonExit.isSelected()) {
                 this.userController.exit();
@@ -116,9 +120,10 @@ public class Menu extends JFrame{
         setMode.add(buttonSearchBooks);
         setMode.add(buttonBorrowBook);
         setMode.add(buttonReturnBook);
+        setMode.add(buttonMyBorrowedBooks);
         setMode.add(buttonLogout);
         setMode.add(buttonExit);
-        Object[] array = {buttonAllBooks, buttonSearchBooks, buttonBorrowBook,
+        Object[] array = {buttonAllBooks, buttonSearchBooks, buttonMyBorrowedBooks, buttonBorrowBook,
                 buttonReturnBook, buttonLogout, buttonExit};
         return array;
     }

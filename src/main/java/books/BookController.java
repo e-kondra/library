@@ -53,7 +53,7 @@ public class BookController {
         this.updateBookArray();
         this.displayBooksTable(this.books);
     }
-    private void displayBooksTable(ArrayList<Book> someBooks) {
+    public void displayBooksTable(ArrayList<Book> someBooks) {
 
         String[] columnNames = { "Title", "Author", "Available", "Description"};
         String[][] data = new String[someBooks.size()][4];
@@ -115,6 +115,10 @@ public class BookController {
     public void searchBookDialog() {
         String detail = JOptionPane.showInputDialog("Please enter a title or author for searching");
         ArrayList<Book> foundBooks = this.findBooksByDetail(detail);
+        if (foundBooks.isEmpty()){
+            this.displayMessage("Sorry, we did not find books on your request,\n please, try again ");
+            return;
+        }
         this.displayBooksTable(foundBooks);
     }
 
@@ -193,6 +197,5 @@ public class BookController {
             return null;
         }
     }
-
 
 }
