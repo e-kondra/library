@@ -136,34 +136,6 @@ public class BookController {
         showMessageDialog(null, s, "Information: ", PLAIN_MESSAGE);
     }
 
-    // This method gets the selected value from the option pane and resets the
-    // value to null, so we can use it again.
-    protected String getOptionPaneValue() {
-
-        // Get the result . . .
-        Object o = optPane.getInputValue();
-        String s = "<Unknown>";
-        if (o != null)
-            s = (String) o;
-
-        Object val = optPane.getValue(); // which button?
-
-        // Check for cancel button or closed option
-        if (val != null) {
-            if (val instanceof Integer) {
-                int intVal = ((Integer) val).intValue();
-                if ((intVal == JOptionPane.CANCEL_OPTION)
-                        || (intVal == JOptionPane.CLOSED_OPTION))
-                    s = "<Cancel>";
-            }
-        }
-        optPane.setValue("");
-        optPane.setInitialValue("X");
-        optPane.setInitialValue("");
-
-        return s;
-    }
-
     public Book chooseBookDialog() {
         String detail = JOptionPane.showInputDialog("Please enter a title or author for searching");
         ArrayList<Book> foundBooks = this.findBooksByDetail(detail);

@@ -18,12 +18,11 @@ public class Library {
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        return "Library{" +
-                "id=" + id +
-                ", reader=" + reader +
-                ", book=" + book +
+        return
+                "id." + id +
+                ", reader " + reader.getUsername() +
+                ", book=" + book.toString() +
                 ", dateBorrowing=" + dateFormat.format(dateBorrowing )+
-                ", dateReturning=" + dateReturning +
-                '}';
+                ", dateReturning=" + dateFormat.format(dateReturning ) ;
     }
 }

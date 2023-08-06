@@ -8,13 +8,7 @@ public class UserRepository {
         this.connection = connection;
     }
 
-    public void checkUserByUsername(String username) throws SQLException, UserCreatingException {
-        ResultSet resultSet = this.getUserByUsernameFromDB(username);
-        while (resultSet.next()) {
-            throw new UserCreatingException("There is a user with same username in dataBase\nFor register change username, please");
-        }
-    }
-    private ResultSet getUserByUsernameFromDB(String username)  throws SQLException {
+    public ResultSet getUserByUsernameFromDB(String username)  throws SQLException {
         String sql = "SELECT * FROM users where username = ?";
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
         preparedStatement.setString(1, username);

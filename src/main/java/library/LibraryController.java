@@ -34,7 +34,7 @@ public class LibraryController {
 
     public void uploadLibraryArrayList() {
         try {
-            ResultSet resultSet = this.libraryRepository.getLibrary();
+            ResultSet resultSet = this.libraryRepository.getLibraryList();
             ArrayList<Library> library = this.setLibraryArrayList(resultSet);
             this.libraryArrayList = library;
         }catch (Exception exception) {
@@ -157,7 +157,7 @@ public class LibraryController {
 
     public Book chooseUserBookDialog(User user) throws SQLException{
 
-        ArrayList<Book> foundBooks = this.findBooksByUser(user);
+        ArrayList<Book> foundBooks = this.libraryRepository.findBooksByUser(user);
 
         Book selectedBook = (Book) JOptionPane.showInputDialog(null,
                 "Select the book to borrow",
@@ -169,9 +169,6 @@ public class LibraryController {
         return selectedBook;
     }
 
-    private ArrayList<Book> findBooksByUser(User user) throws SQLException{
-        return this.libraryRepository.findBooksByUser(user);
-    }
 
     public void borrowedBookDialog() {
         ArrayList<Library> library =  this.getBorrowedBookList();

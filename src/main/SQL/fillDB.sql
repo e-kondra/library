@@ -31,3 +31,11 @@ CREATE TABLE users(
 
 INSERT INTO users(username, password, firstname, lastname, is_librarian)
     VALUES('librarian','12345','Zino','Adidi', 1)
+
+CREATE TABLE library(
+                        id int AUTO_INCREMENT PRIMARY KEY,
+                        user_id INT UNSIGNED,
+                        book_id INT UNSIGNED,
+                        date_borrowing DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        date_returning DATETIME
+);

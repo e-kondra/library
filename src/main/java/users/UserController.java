@@ -3,6 +3,7 @@ package users;
 
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -49,26 +50,30 @@ public class UserController {
         }
     }
 
-    private User registerUser(String username, String password, String firstName, String lastName, boolean isLibrarian) throws Exception {
-        User user = null;
+    private User registerUser(String username, String password, String firstName,
+                              String lastName, boolean isLibrarian) throws Exception {
         this.checkUserRegister(username, password, firstName, lastName);
         return this.userRepository.createNewUser(username,password, firstName, lastName, isLibrarian);
     }
 
-    private void checkUserRegister(String username, String password, String firstName, String lastName) throws Exception{
+    private void checkUserRegister(String username, String password, String firstName,
+                                   String lastName) throws Exception{
         if (username.isBlank() || username == null
                 || password.isBlank() || password == null
                 || firstName.isBlank() || firstName == null
                 || lastName.isBlank() || lastName == null){
             throw new UserCreatingException("Fields Username, Password, First name, Last name must be filled in");
         }
-        this.userRepository.checkUserByUsername(username);
+        this.checkUserByUsername(username);
     }
 
-    private void displayMessage(String message){
-        JOptionPane.showMessageDialog(null, message);
+    public void checkUserByUsername(String username) throws SQLException, UserCreatingException {
+        ResultSet resultSet = this.userRepository.getUserByUsernameFromDB(username);
+        while (resultSet.next()) {
+            throw new UserCreatingException("There is a user with same username in dataBase\n" +
+                    "For your register change username, please");
+        }
     }
-
 
     public User loginUserDialog() {
         try {
@@ -116,5 +121,9 @@ public class UserController {
             this.displayMessage(exception.getMessage());
             return null;
         }
+    }
+
+    private void displayMessage(String message){
+        JOptionPane.showMessageDialog(null, message);
     }
 }

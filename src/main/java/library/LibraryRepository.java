@@ -44,7 +44,7 @@ public class LibraryRepository {
         return books;
     }
 
-    public ResultSet getLibrary() throws SQLException{
+    public ResultSet getLibraryList() throws SQLException{
         String sql = "select * from library";
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();
