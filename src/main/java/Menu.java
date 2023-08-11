@@ -8,6 +8,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.*;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+
 import static javax.swing.JOptionPane.*;
 
 public class Menu extends JFrame{
@@ -155,12 +158,20 @@ public class Menu extends JFrame{
     }
     private void setDBConnection(){
         try{
-            this.connection = DriverManager.getConnection(url, username, password);
+            PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration();
+            propertiesConfiguration.load("application.properties");
+            this.connection = DriverManager.getConnection(
+                    propertiesConfiguration.getString("database.url") // url
+                    , propertiesConfiguration.getString("database.username") //username
+                    , propertiesConfiguration.getString("database.password") //password
+            );
         } catch (SQLException exception){
             System.out.println("Something was wrong with DB Connection: "
                     + exception.getSQLState() + " "
                     + exception.getMessage()
             );
+        } catch (ConfigurationException e) {
+            throw new RuntimeException(e);
         }
     }
 

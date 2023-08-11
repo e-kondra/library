@@ -44,7 +44,7 @@ public class LibraryRepository {
         return books;
     }
 
-    public ResultSet getLibraryList() throws SQLException{
+    public ResultSet getLibrary() throws SQLException{
         String sql = "select * from library";
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -67,5 +67,12 @@ public class LibraryRepository {
         preparedStatement.setInt(3, user.getId());
         preparedStatement.executeUpdate();
 
+    }
+
+    public ResultSet getLibraryList() throws SQLException {
+        String sql = "select * from library";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet;
     }
 }
