@@ -8,7 +8,6 @@ import users.UserController;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -95,9 +94,9 @@ public class LibraryController {
 
     public void borrowBook(User currentUser) {
         try {
-            this.CheckUsersCountOfBooks(currentUser);
+            this.checkUsersCountOfBooks(currentUser);
             Book book = this.bookController.chooseBookDialog();
-            this.CheckUserGetOnlyOneCopy(currentUser, book);
+            this.checkUserGetOnlyOneCopy(currentUser, book);
             this.libraryRepository.insertBorrowedBook(currentUser, book);
             this.bookController.changeBookCount(book, -1);
             this.displayMessage("You've successfully borrowed book");
@@ -110,7 +109,7 @@ public class LibraryController {
     }
 
     // Check User should NOT be able to borrow more than one copy of the same book
-    private void CheckUserGetOnlyOneCopy(User currentUser, Book book) throws Exception {
+    private void checkUserGetOnlyOneCopy(User currentUser, Book book) throws Exception {
         ArrayList<Book> userBooks = this.libraryRepository.findBooksByUser(currentUser);
         userBooks.forEach(System.out::println);
         System.out.println(book.getId());
@@ -124,7 +123,7 @@ public class LibraryController {
     }
 
     // Check User should NOT be able to borrow more than 5 books at a time
-    private void CheckUsersCountOfBooks(User currentUser) throws Exception {
+    private void checkUsersCountOfBooks(User currentUser) throws Exception {
         ArrayList<Book> userBooks = this.libraryRepository.findBooksByUser(currentUser);
         if (userBooks.size() >= 5){
             throw new CheckException("You DO NOT able to borrow more than 5 books at a time");
